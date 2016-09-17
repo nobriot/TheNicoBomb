@@ -1,0 +1,57 @@
+<resources>
+    <string name="app_name">The Nico Bomb</string>
+
+    <string name="welcome_text">Configure and send your message(s)</string>
+    <string name="top_menu_item_exit">Exit</string>
+
+    <string name="edit_message">Type your message</string>
+    <string name="phone_number">Enter phone number</string>
+    <string name="delay_message">Delay before sending</string>
+    <string name="repeat_message">Number of messages</string>
+    <string name="interval_message">Message frequency</string>
+
+    <string name="send_button">Send!</string>
+
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+
+
+    <!-- Spinner resources -->
+    <string-array name="sms_repeat_count">
+        <item>1 message</item>
+        <item>2 messages</item>
+        <item>5 messages</item>
+        <item>10 messages</item>
+        <item>20 messages</item>
+        <item>50 messages</item>
+        <item>100 messages</item>
+        <item>500 messages</item>
+    </string-array>
+
+    <string-array name="sms_delay">
+        <item>Immediately</item>
+        <item>30 seconds</item>
+        <item>1 minute</item>
+        <item>2 minutes</item>
+        <item>5 minutes</item>
+        <item>10 minutes</item>
+        <item>30 minutes</item>
+        <item>1 hour</item>
+        <item>2 hours</item>
+        <item>5 hours</item>
+    </string-array>
+
+    <string-array name="sms_interval">
+        <item>Every 5 seconds</item>
+        <item>Every 10 seconds</item>
+        <item>Every 20 seconds</item>
+        <item>Every 35 seconds</item>
+        <item>Every 1 minute</item>
+        <item>Every 2 minutes</item>
+        <item>Every 5 minutes</item>
+        <item>Every 1 hour</item>
+        <item>Every 2 hours</item>
+        <item>Every 5 hours</item>
+    </string-array>
+
+</resources>
