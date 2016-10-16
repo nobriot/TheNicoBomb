@@ -72,16 +72,18 @@ public class SpinnerOnItemSelectedListener implements AdapterView.OnItemSelected
                 break;
             case 3 ://Interval setting
                 switch(pos){
-                    case 0 : value = 5*1000 ; break;
-                    case 1 : value = 10*1000; break;
-                    case 2 : value = 20*1000; break;
-                    case 3 : value = 35*1000; break;
-                    case 4 : value = 1*60*1000; break;
-                    case 5 : value = 2*60*1000; break;
-                    case 6 : value = 5*60*1000; break;
-                    case 7 : value = 1*60*60*1000; break;
-                    case 8 : value = 2*60*60*1000; break;
-                    case 9 : value = 5*60*60*1000; break;
+                    case 0 : value = 1*1000 ; break;
+                    case 1 : value = 2*1000 ; break;
+                    case 2 : value = 5*1000 ; break;
+                    case 3 : value = 10*1000; break;
+                    case 4 : value = 20*1000; break;
+                    case 5 : value = 35*1000; break;
+                    case 6 : value = 1*60*1000; break;
+                    case 7 : value = 2*60*1000; break;
+                    case 8 : value = 5*60*1000; break;
+                    case 9 : value = 1*60*60*1000; break;
+                    case 10 : value = 2*60*60*1000; break;
+                    case 11 : value = 5*60*60*1000; break;
                 }
                 MainActivity.mainActivityInstance.setInterval(value);
                 break;

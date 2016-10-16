@@ -6,5 +6,7 @@
     </style>
 
     <color name="spaceblog_background">#003366</color>
+    <color name="textedit_background">#eff4f4</color>
+
 
 </resources>

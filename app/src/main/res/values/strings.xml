@@ -44,6 +44,8 @@
     </string-array>
 
     <string-array name="sms_interval">
+        <item>Every 1 second</item>
+        <item>Every 2 seconds</item>
         <item>Every 5 seconds</item>
         <item>Every 10 seconds</item>
         <item>Every 20 seconds</item>

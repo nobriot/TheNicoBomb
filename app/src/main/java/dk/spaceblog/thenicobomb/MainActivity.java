@@ -19,9 +19,17 @@
 
 package dk.spaceblog.thenicobomb;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.provider.ContactsContract;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.SmsManager;
@@ -29,9 +37,13 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
@@ -71,7 +83,6 @@ public class MainActivity extends AppCompatActivity {
         delaySpinner.setOnItemSelectedListener(new SpinnerOnItemSelectedListener(2));
         delaySpinner.setSelection(0);
 
-
         // Interval spinner
         intervalSpinner = (Spinner) findViewById(R.id.intervalSpinner);
         ArrayAdapter<CharSequence> adapter3 = ArrayAdapter.createFromResource(this, R.array.sms_interval, android.R.layout.simple_spinner_item);
@@ -79,6 +90,21 @@ public class MainActivity extends AppCompatActivity {
         intervalSpinner.setAdapter(adapter3);
         intervalSpinner.setOnItemSelectedListener(new SpinnerOnItemSelectedListener(3));
         intervalSpinner.setSelection(0);
+
+        //Activate the contact button :
+        ((ImageButton)findViewById(R.id.pick_contact)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // user BoD suggests using Intent.ACTION_PICK instead of .ACTION_GET_CONTENT to avoid the chooser
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                // BoD con't: CONTENT_TYPE instead of CONTENT_ITEM_TYPE
+                intent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE);
+                startActivityForResult(intent, 1);
+            }
+        });
+
+        //Check whether the app has the permission to send SMS :
+        this.checkSMSPermission();
 
     }
 
@@ -119,6 +145,10 @@ public class MainActivity extends AppCompatActivity {
         Log.d("NicoBomb:MainActivity", "New repeat count configured:" +newRepeat +" messages" );
         this.repeat=newRepeat;
     }
+    public void setPhoneNumber(String newPhoneNumber){
+        Log.d("NicoBomb:MainActivity", "New Phone Number configured:" +newPhoneNumber +" messages" );
+        this.phoneNumber=newPhoneNumber;
+    }
 
     //What happens when the radio buttons are clicked
     public void onRadioButtonClicked(View view){
@@ -130,6 +160,38 @@ public class MainActivity extends AppCompatActivity {
         Log.d("NicoBomb:MainActivity", "Pick contact clicked");
         // TODO: something like this: http://www.c-sharpcorner.com/UploadFile/ef3808/how-to-pick-a-contact-from-contact-list-in-android/
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (data != null) {
+            Uri uri = data.getData();
+
+            if (uri != null) {
+                Cursor c = null;
+                try {
+                    c = getContentResolver().query(uri, new String[]{
+                                    ContactsContract.CommonDataKinds.Phone.NUMBER,
+                                    ContactsContract.CommonDataKinds.Phone.TYPE },
+                            null, null, null);
+
+                    if (c != null && c.moveToFirst()) {
+                        String number = c.getString(0);
+                        int type = c.getInt(1);
+                        showSelectedNumber(type, number); //Show a toast for the phone number
+                        setPhoneNumber(number);// Put the number in the field
+                        // Also copy the data into the editText
+                        EditText editText = (EditText)findViewById(R.id.phone_number);
+                        editText.setText(number);
+                    }
+                } finally {
+                    if (c != null) {
+                        c.close();
+                    }
+                }
+            }
+        }
+    }
+
 
 
     /** Called when the user clicks the Send button */
@@ -175,5 +237,34 @@ public class MainActivity extends AppCompatActivity {
         sms.sendTextMessage(this.phoneNumber, null, this.textMessage, null, null);
     }
 
+    /* Function used to show a toast with selected phone number */
+    public void showSelectedNumber(int type, String number) {
+        Toast.makeText(this, type + ": " + number, Toast.LENGTH_LONG).show();
+    }
+
+
+    /**/
+    public void checkSMSPermission(){
+    // Here, "this" is the current activity
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
+
+            // Should we show an explanation?
+            //if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.SEND_SMS)) {
+
+                // Show an expanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+
+            //} else {
+                // No explanation needed, we can request the permission.
+
+                ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.SEND_SMS}, 0); //MY_PERMISSIONS_REQUEST_SEND_SMS
+
+                // MY_PERMISSIONS_REQUEST_SEND_SMS is an
+                // app-defined int constant. The callback method gets the
+                // result of the request.
+            //}
+        }
+    }
 
 }
