@@ -125,6 +125,12 @@ public class MainActivity extends AppCompatActivity {
         Log.d("NicoBomb:MainActivity", "Radio button has been clicked");
     }
 
+    // When the pick contact button has been selected
+    public void pickContact(View view){
+        Log.d("NicoBomb:MainActivity", "Pick contact clicked");
+        // TODO: something like this: http://www.c-sharpcorner.com/UploadFile/ef3808/how-to-pick-a-contact-from-contact-list-in-android/
+    }
+
 
     /** Called when the user clicks the Send button */
     public void sendNicoBomb(View view) {

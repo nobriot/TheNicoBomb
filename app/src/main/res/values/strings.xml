@@ -5,12 +5,14 @@
     <string name="top_menu_item_exit">Exit</string>
 
     <string name="edit_message">Type your message</string>
-    <string name="phone_number">Enter phone number</string>
+    <string name="phone_number">Enter number</string>
     <string name="delay_message">Delay before sending</string>
     <string name="repeat_message">Number of messages</string>
     <string name="interval_message">Message frequency</string>
 
-    <string name="send_button">Shoot!</string>
+    <string name="pick_contact">Contacts</string>
+
+    <string name="send_button">Shoot! </string>
 
     <string name="yes">Yes</string>
     <string name="no">No</string>
