@@ -216,6 +216,8 @@ public class MainActivity extends AppCompatActivity {
         }
         // We display a notification if there is a message
         if (null != textMessage && null != phoneNumber) {
+            //Small message to confirm that the NicoBomb started
+            Toast.makeText(this, "TheNicoBomb started!", Toast.LENGTH_SHORT).show();
             for (int i = 0; i < repeat; i++) {
                 // Execute some code after 2 seconds have passed
                 Handler handler = new Handler();
